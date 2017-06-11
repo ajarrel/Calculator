@@ -1,95 +1,44 @@
 
 //=======Creating click event and targeting display=====//
 
-// event listener on the button 9
-document.getElementById('9').addEventListener("click", function(event) {
+var numbers, display, currentVal, operators, mainArray; //setting global variables all at once for use later
+currentVal = '';
+mainArray = [];
+operators = document.getElementsByClassName('operators');
+numbers = document.getElementsByClassName('number'); //get every elem with class 'number' and add to array
+display = document.getElementById('display');
+operators
+
+for(i = 0; i < numbers.length; i++){ //loop through every elem with class number and bind a click event handler to them
+    
+    numbers[i].addEventListener('click', function(e){ //onclick to each elem with class number, set the textContent of display to itself plus the value of the number elem clicked
+        
+        currentVal =+ numbers[i].value; //keep current number in a variable
+        display.textContent = dislay.textContent + numbers[i].value; //set the display equal to the current display value plus the value of the number clicked
+        
+    }
+}
+
+for(i = 0; i < operators.length; i++){
+        
+    operators[i].addEventListener('click', function(e){ //when operator is clicked, push currentVal to mainArray, update display, reset currentVal
+        
+        mainArray.push( currentVal ); //push the currentVal (it's a string) to mainArray
+        currentVal = ''; //currentVal needs to be reset after it's pushed to the array
+        
+        mainArray.push( operators[i].value ); //push the operator symbol to the mainArray (also a string)
+        
+        display.textContent = display.textContent + ' ' + operators[i].value + ' '; //set display equal to itself plus bracketing spaces around the operator symbol
+        
+    }
+}
+
+                    
+// event listener on the button .
+document.getElementById('period').addEventListener("click", function(event) {
     // display the string of the number in the display
-    document.getElementById('display').textContent = "9";
+    document.getElementById('display').textContent = ".";
   }, false);
-
-// event listener on the button 8
-  document.getElementById('8').addEventListener("click", function(event) {
-      // display the string of the number in the display
-      document.getElementById('display').textContent = "8";
-    }, false);
-
-    // event listener on the button 7
-    document.getElementById('7').addEventListener("click", function(event) {
-        // display the string of the number in the display
-        document.getElementById('display').textContent = "7";
-      }, false);
-
-      // event listener on the button 6
-      document.getElementById('6').addEventListener("click", function(event) {
-          // display the string of the number in the display
-          document.getElementById('display').textContent = "6";
-        }, false);
-
-        // event listener on the button 5
-        document.getElementById('5').addEventListener("click", function(event) {
-            // display the string of the number in the display
-            document.getElementById('display').textContent = "5";
-          }, false);
-
-          // event listener on the button 4
-          document.getElementById('4').addEventListener("click", function(event) {
-              // display the string of the number in the display
-              document.getElementById('display').textContent = "4";
-            }, false);
-
-            // event listener on the button 3
-            document.getElementById('3').addEventListener("click", function(event) {
-                // display the string of the number in the display
-                document.getElementById('display').textContent = "3";
-              }, false);
-
-              // event listener on the button 2
-              document.getElementById('2').addEventListener("click", function(event) {
-                  // display the string of the number in the display
-                  document.getElementById('display').textContent = "2";
-                }, false);
-
-                // event listener on the button 1
-                document.getElementById('1').addEventListener("click", function(event) {
-                    // display the string of the number in the display
-                    document.getElementById('display').textContent = "1";
-                  }, false);
-
-                  // event listener on the button 0
-                  document.getElementById('0').addEventListener("click", function(event) {
-                      // display the string of the number in the display
-                      document.getElementById('display').textContent = "0";
-                    }, false);
-
-                    // event listener on the button +
-                    document.getElementById('plus').addEventListener("click", function(event) {
-                        // display the string of the number in the display
-                        document.getElementById('display').textContent = "+";
-                      }, false);
-
-                      // event listener on the button /
-                      document.getElementById('divide').addEventListener("click", function(event) {
-                          // display the string of the number in the display
-                          document.getElementById('display').textContent = "/";
-                        }, false);
-
-                        // event listener on the button *
-                        document.getElementById('multiply').addEventListener("click", function(event) {
-                            // display the string of the number in the display
-                            document.getElementById('display').textContent = "*";
-                          }, false);
-
-                          // event listener on the button -
-                          document.getElementById('minus').addEventListener("click", function(event) {
-                              // display the string of the number in the display
-                              document.getElementById('display').textContent = "-";
-                            }, false);
-
-                            // event listener on the button .
-                            document.getElementById('period').addEventListener("click", function(event) {
-                                // display the string of the number in the display
-                                document.getElementById('display').textContent = ".";
-                              }, false);
 
 //===============function that concatenates input on display=========//
 
@@ -144,34 +93,4 @@ else if(operand==="-"){
 else{
   return false; //in case user inputs an unaccepted operand.
  }
-}
-
-
-var mainArray = []; //because the input will come in the following order (number)(operand)(number)(operand), and will be in a single array, the odd index values will always be number values, and the even index values will always be operands.  even index will be numbers stored as strings.  And odd indexes will be operands (+, -, /, *), stored as strings.
-var currentVal = "";
-
-for(i=0; i < mainArray.length; i+=3){
-  var returnVal = operate(mainArray[1], mainArray[i+1], mainArray[i+2]);
-}
-
-var elemArray = document.getElementsByClassName("number"); // DOM HTML number elements must have a class called "number"
-var operandArray = document.getElementsByClassName("operator"); // DOM HTML elements must have a class called "operator"
-
-
-
-for(ix = 0; ix < elemArray.length; ix++){ //get every button that is a number element and bind this handler to it.
-
-  elemArray[ix].addEventListener("click",function(e){
-    var val = elemArray[ix].getAttribute("value"); // get the value of the DOM element (expected input intergers 1-9)
-    currentVal += val; // += on a string will add the single string val to the end of the larger string currentVal.
-  });
-
-}
-
-for(i2 = 0; i2 < operandArray.length; i2++){ // get every button that's an operator and bind this handler to it.
-
-  operandArray[i2].addEventListener("click",function(e){ //when someone clicks an operand (+,-,/,*), push the currentVal into mainArray.  Then push the operator that sent it there next.
-    mainArray.push( currentVal ); // This is a number as a string.
-    mainArray.push( operandArray[i2].getAttribute("value")); //This is (+,-,*,/) as a string.
-  });
 }
